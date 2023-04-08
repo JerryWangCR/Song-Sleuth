@@ -48,3 +48,6 @@ app:
     - opts:
         is_expand: false
       PLATFORM: all
+trigger_map:
+  - pull_request_target_branch: main
+    workflow: primary
