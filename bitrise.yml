@@ -34,6 +34,9 @@ workflows:
       - npm@1:
           inputs:
             - command: install
+      - npm@1:
+          inputs:
+            - command: test
       - save-npm-cache@1: {}
       - deploy-to-bitrise-io@2: {}
 meta:
