@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login } from "./src/Screens/Login";
 import { Home } from "./src/Screens/Home";
 import { Settings } from "./src/Screens/Settings";
+import { GameMode } from "./src/Screens/GameMode";
 import { getData } from "./src/Utils/storage";
 
 export default function App() {
