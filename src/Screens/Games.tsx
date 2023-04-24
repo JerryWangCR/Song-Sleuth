@@ -15,7 +15,8 @@ import { fetchPlaylists } from "../Services/fetchPlaylists";
 import { fetchUsersPlaylists } from "../Services/fetchUsersPlaylists";
 import { Button, Icon, Layout, Spinner } from "@ui-kitten/components";
 
-export const Games = () => {
+import { SongPlayer } from "./SongPlayer";
+export const Games = ({ navigation }) => {
   const [songs, setSongs] = useState();
   const [playlists, setPlaylists] = useState();
   const [userPlaylists, setUserPlaylists] = useState();
@@ -51,7 +52,10 @@ export const Games = () => {
           renderItem={({ item }) => (
             <TouchableWithoutFeedback
               onPress={() => {
-                getPlaylistRandomSongs(item.id);
+                // getPlaylistRandomSongs(item.id);
+                navigation.navigate("SongPlayer", {
+                  playlistID: item.id,
+                });
               }}
             >
               <View style={styles.item}>

@@ -11,6 +11,7 @@ import { Home } from "./src/Screens/Home";
 import { Settings } from "./src/Screens/Settings";
 import { GameMode } from "./src/Screens/GameMode";
 import { getData } from "./src/Utils/storage";
+import { SongPlayer } from "./src/Screens/SongPlayer";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -27,11 +28,28 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <NavigationContainer>
-        {/* <Stack.Navigator>
-          <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
-          <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
-          <Stack.Screen options={{ headerShown: false }} name="Settings" component={Settings} />
-        </Stack.Navigator> */}
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home"
+            component={Home}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Settings"
+            component={Settings}
+          />
+          <Stack.Screen
+            options={{ headerShown: true }}
+            name="SongPlayer"
+            component={SongPlayer}
+          />
+        </Stack.Navigator>
         {/* {loggedIn ? <Home /> : <Login />} */}
       </NavigationContainer>
     </ApplicationProvider>
