@@ -27,6 +27,15 @@ export const SongPlayer = ({ route, navigation }) => {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [pressed, setPressed] = useState(false);
+
+  interface FinalAnswer {
+    name: string;
+    image: string;
+  }
+  const [answer, setAnswer] = useState<FinalAnswer>({ name: "", image: "" });
+  const [userAnswer, setUserAnswer] = useState("");
+
   const soundObject = new Audio.Sound();
   let isLoaded = false;
   async function playSong(previewUrl: string) {
@@ -50,14 +59,23 @@ export const SongPlayer = ({ route, navigation }) => {
   }
 
   async function fetchSongs() {
-    fetchRandomSongs(4, playlistID).then((res) => {
-      setSongs(res);
-      setLoading(false);
-      res.forEach((item) => songs.push(item.track.name));
-    });
+    var randomSong = Math.floor(Math.random() * songs.length);
+    setPressed(false);
+    fetchRandomSongs(4, playlistID)
+      .then((res) => {
+        setSongs(res);
+        setLoading(false);
+        res.forEach((item) => songs.push(item.track.name));
+        setAnswer({
+          name: res[randomSong].track.name,
+          image: res[randomSong].track.album.images[0].url,
+        });
+      })
+      .catch((e) => console.log(e));
   }
   useEffect(() => {
     fetchSongs();
+    setPressed(false);
   }, []);
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -77,7 +95,11 @@ export const SongPlayer = ({ route, navigation }) => {
               height: 350,
             }}
             source={{
-              uri: `${songs[0].track.album.images[0].url}`,
+              uri: `${
+                pressed
+                  ? answer.image
+                  : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Question_mark_%28black%29.svg/800px-Question_mark_%28black%29.svg.png"
+              }`,
             }}
           />
           <Text
@@ -87,7 +109,7 @@ export const SongPlayer = ({ route, navigation }) => {
               alignItems: "center",
             }}
           >
-            Quiz Song: {songs[0].track.name}
+            Quiz Song: {answer.name}
           </Text>
 
           <View style={{ flexDirection: "row" }}>
@@ -98,7 +120,13 @@ export const SongPlayer = ({ route, navigation }) => {
             >
               ▶
             </Button>
-            <Button onPress={() => pauseSong()}>▐▐</Button>
+            <Button
+              onPress={() => {
+                pauseSong();
+              }}
+            >
+              ▐▐
+            </Button>
             <Button
               onPress={() => {
                 fetchSongs();
@@ -121,8 +149,20 @@ export const SongPlayer = ({ route, navigation }) => {
                 flexDirection: "row",
               }}
             >
-              <SongButton songName={songs[0].track.name} />
-              <SongButton songName={songs[1].track.name} />
+              <SongButton
+                songName={songs[0].track.name}
+                answer={answer.name}
+                setUserAnswer={setUserAnswer}
+                setPressed={setPressed}
+                nextQuestion={() => fetchSongs()}
+              />
+              <SongButton
+                songName={songs[1].track.name}
+                answer={answer.name}
+                setUserAnswer={setUserAnswer}
+                setPressed={setPressed}
+                nextQuestion={() => fetchSongs()}
+              />
             </View>
             <View
               style={{
@@ -131,8 +171,20 @@ export const SongPlayer = ({ route, navigation }) => {
                 flexDirection: "row",
               }}
             >
-              <SongButton songName={songs[2].track.name} />
-              <SongButton songName={songs[3].track.name} />
+              <SongButton
+                songName={songs[2].track.name}
+                answer={answer.name}
+                setUserAnswer={setUserAnswer}
+                setPressed={setPressed}
+                nextQuestion={() => fetchSongs()}
+              />
+              <SongButton
+                songName={songs[3].track.name}
+                answer={answer.name}
+                setUserAnswer={setUserAnswer}
+                setPressed={setPressed}
+                nextQuestion={() => fetchSongs()}
+              />
             </View>
           </View>
         </View>

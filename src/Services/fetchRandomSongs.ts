@@ -15,7 +15,7 @@ export const fetchRandomSongs = async (
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(token);
+  // console.log(token);
 
   return await axios
     .request(config)

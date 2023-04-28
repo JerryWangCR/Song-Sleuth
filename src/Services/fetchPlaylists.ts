@@ -12,7 +12,7 @@ export const fetchPlaylists = async (categoryID: string) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  console.log(token);
+  // console.log(token);
 
   return await axios
     .request(config)
